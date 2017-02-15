@@ -12,9 +12,10 @@
 	2. [reference](http://hgdownload.cse.ucsc.edu/downloads.html)
 	3. Lots of options - not sure which files to use
 4. mouse - 17 sequences , Paper for another dataset - dataset ,  reference​
-	1. [Mouse Genome Project](ftp://ftp-mouse.sanger.ac.uk/)
-	2. [reference](http://hgdownload.cse.ucsc.edu/downloads.html)
-	3. 21 Gb for the variants (REL-1505-SNPs_Indels)
+	1. [Mouse Genome Project](http://www.nature.com/articles/sdata201675)
+	2. ftp download site: ftp://ftp-mouse.sanger.ac.uk/
+	3. [reference](http://hgdownload.cse.ucsc.edu/downloads.html)
+	4. 21 Gb for the variants (REL-1505-SNPs_Indels)
 5. yeast
 	1. [Yeast Genome Project](http://www.yeastgenome.org/download-data/sequence)
 	2. [reference](http://www.yeastgenome.org/download-data/sequence)
