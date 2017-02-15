@@ -11,6 +11,7 @@
 	1. [1000 Genomes](http://www.internationalgenome.org/)
 	2. [reference](http://hgdownload.cse.ucsc.edu/downloads.html)
 	3. Lots of options - not sure which files to use
+	4. over 3000 humans in total over the three studies in 1000G
 4. mouse - 17 sequences , Paper for another dataset - dataset ,  reference​
 	1. [Mouse Genome Project](http://www.nature.com/articles/sdata201675)
 	2. ftp download site: ftp://ftp-mouse.sanger.ac.uk/
