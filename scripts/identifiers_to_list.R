@@ -1,5 +1,5 @@
 
-table_to_list <- function(csv.file) {
+identifiers_to_list <- function(csv.file) {
     if (is.character(csv.file)==FALSE) {
         stop("csv.file must be of class character")
     }
