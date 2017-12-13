@@ -1,0 +1,198 @@
+\documentclass[12pt]{article}
+\usepackage[style=nature,%
+    url=false,%
+    isbn=false,%
+    doi=false,%
+    maxbibnames=10,%
+    giveninits=true,%
+    backend=biber]{biblatex}
+\AtEveryBibitem{%
+    \clearfield{day}%
+    \clearfield{month}%
+    \clearlist{language}%
+    \clearfield{note}%
+}
+\usepackage{amsmath}
+\bibliography{references}
+\title{Tightly regulated genes experience weaker purifying selection in \emph{Drosophila melanogaster}}
+\author{Mark Juers}
+\begin{document}
+\maketitle
+<<echo=FALSE>>=
+opts_chunk$set(echo = FALSE , warning = FALSE , error = FALSE , message = FALSE , fig.width = 6 , fig.height = 6)
+# prior workspace is loaded to save on computation time, 
+# regression code can be found in analysis.R
+@
+<<>>=
+library(knitr)
+library(ggplot2)
+library(dplyr)
+@
+
+\section*{Introduction}
+
+Proper gene expression is dependent on the process of transcription, which is initiated at the RNA polymerase II core promoter\cite{kadonaga_perspectives_2012}, which is studded with transcription start sites (TSSs).
+Promoters can be classified based on shape, generally though of as ``peaked'' or ``broad''. 
+This classification is based on a shape index, which is calculated based on probability of each site being a transcription start site for a given transcription start region (TSR). 
+This calculation is detailed further in the caption for table \ref{tab:data}, and is analogous to Shannon entropy.
+High shape index corresponds to peaked TSRs, while low shape index denotes broad TSRs.
+
+Hoskins et al \cite{hoskins_genome-wide_2011} found that genes with a more restricted expression pattern had a higher shape index (were more peaked) than genes with constitutive expression. This naturally leads to the hypothesis that these tightly regulated genes may be subject to stronger purifying selection. Using low heterozygosity as a proxy for stronger purifying selection, I investigate the hypothesis that peaked TSRs correlate negatively with heterozygosity, indicating stronger purifying selection on tightly regulated genes.
+
+\section*{Data and Methods}
+
+Data represent aggregated sources: Grenier et al. (2015) \cite{grenier_global_2015}, downloaded from the \emph{Drosophila} Genome Nexus, and Hoskins et al (2011) \cite{hoskins_genome-wide_2011}. Both were obtained and aggregated by Raborn et al (in prep). 
+The former dataset includes deep sequencing single-nucleotide polymorphism (SNP) data from $84$ strains of \emph{D. melanogaster}. I used the latter dataset to associate TSR peakedness with each observation based on chromosomal position.
+The variables present in the aggregated dataset are described below (Table \ref{tab:data}).
+I included the variable describing absolute distance from the TSR center because there was an apparent association between heterozygosity and distance noted by Raborn et al (Figure \ref{fig:dist}).
+The original dataset consists of \Sexpr{nrow(dataAll)} observations. Due to its size and concerns over computation time, I sampled $10000$ observations at random for this analysis.
+
+\begin{table}
+    \caption{Dataset examples after preprocessing. Only variables used in the analysis are included. Variable names are as follows: \texttt{chrom}, chromosome on which promoter region is found; \texttt{het}, nucleotide diversity, calculated as $1 - \sum_{i = 1}^n p_i^2$ where $p_i$ is the $i$th allele frequency and $n$ is the number of alleles, bounded by [0.1]; \texttt{absDist}, distance of site from TSR center; \texttt{shape.index}, an indicator of promoter region peakedness, defined as $2 + \sum_{i}^L p_i {\rm log}_2 p_i$ where the summation term is the sum of all probabilities of observing a TSS at sites where TSSs are observed.\label{tab:data}}
+<<>>=
+head(dataMelted[ , c(1 , 6 , 9 , 10)])
+@
+\end{table}
+
+\begin{figure}
+<<>>=
+dataSummary <- group_by(dataAll , dist , chrom) %>%
+    summarize(mean = mean(het))
+ggplot(dataSummary , aes(x = dist , y = mean , color = chrom)) +
+    geom_point() + 
+    ylab("mean heterozygosity") + xlab("distance from TSR center")
+@
+\caption{Mean heterozygosity shows an apparent upward trend with distance from TSR center.\label{fig:dist}}
+\end{figure}
+
+Heterozygosity can be thought of as the probability of drawing a heterozygote from a population.
+Probability data are naturally modelled by a beta distribution, however it is only defined on $(0,1)$, 
+making the application of beta regression to this zero-inflated dataset limited.
+To work around this limitation, I employed zero-inflated beta regression as implemented in the R package \texttt{zoib} \cite{liu_zoib:_2015}.
+The ZOIB model assumes mean of the response variable follows a beta distribution when it is not zero or one, and is otherwise modeled by the conditional probability of being zero or one. 
+Not considering random effects, the model is then specified as
+\begin{align}
+    {\rm logit}(\mu_i) &= {\bf x}_{1,i}{\bf \beta}_1 \\
+    {\rm log}(v_i) &= {\bf x}_{2,i}{\bf \beta}_2 \\
+    {\rm logit}(p_i) &= {\bf x}_{3,i}{\bf \beta}_3
+\end{align}.
+It is straightforward to add random effects through an additional term which is the product of another design matrix and parameter vector.
+Each parameter gets its own design matrix, ${\bf X}_m$, which allow a unique set of linear predictors, ${bf \beta}_m$ for each link function.
+The parameters being estimated are $\mu = \alpha_1 (\alpha_1 + \alpha_2) ^ {-1}$,
+$v = \alpha_1 + \alpha_2$, and $p = {\rm Pr}(y_i = 0)$.
+Note that the third case above is a simple logistic regression.
+$y$'s expectation is then given by
+\begin{align}
+    {\rm E}(y_i) & = (1 - p_i)\mu_i^{(0,1)} \\
+                 & = \frac{{\rm exp}({\bf x}_{1,i}{\bf \beta}_1)(1 + {\rm exp}({\bf x}_{1,i} {\bf \beta}_1)) ^ {-1}}%
+    {(1 + {\rm exp}({\bf x}_{3,i} {\bf \beta}_3))}
+    \label{eq:ey}
+\end{align}
+These equations can be modified to include random effects, as is implemented below.
+The parameters are estimated using a Markov chain monte carlo (MCMC) approach.
+
+Three models were fitted: one including only fixed effects of shape index and absolute distance from TSR center, one additionally including a random effect of chromosome on nonzero mean and zero inflation, and one allowing the beta distribution precision parameter $v = \alpha_1 + \alpha_2$ to vary with the linear predictors.
+The model was run for $1000$ iterations with a burn-in of $50$.
+Default parameters were used otherwise.
+Inspection of MCMC traceplots of the original model indicated good mixing and convergence.
+
+\section*{Results}
+
+There was a significant deviation from zero for the linear predictor of zero-inflation with respect to shape index (Figure \ref{fig:coeffs}).
+All other predictors did not differ significantly from zero.
+The model incorporating random effects of chromosome returned similar coefficient estimates, but with higher intercept variances.
+Similarly, allowing the beta distribution precision parameter $v$ to vary with shape index and distance did not significantly affect the model.
+
+<<>>=
+beta3 <- c(summ$statistics[4,1] , summ$statistics[5,1] , 0)
+beta1 <- c(summ$statistics[1,1] , 0 , 0)
+x <- as.matrix(cbind(1 , dataMelted$shape.index , dataMelted$absDist))
+@
+
+The expectation of y is given by equation \ref{eq:ey}. Inverting the link functions gives
+\begin{align}
+    {\rm E}[Y] &=
+    \left( \frac{1}{1 + {\rm exp}({\bf X}_3 {\bf \beta}_3)} \right)%
+    \left( \frac{{\rm exp}({\bf X}_1{\bf \beta}_1)}{1 + {\rm exp}({\bf X}_1 {\bf \beta}_1)} \right)
+\end{align}
+Only the intercept term is significant for the mean function on $(0,1)$, and the shape index is significant for probability of zero inflation.
+Y therefore changes as the function 
+\begin{align}
+    {\rm E}[Y] = \frac{\mu}{1 + {\rm exp}(\Sexpr{beta3[1]} + {\tt shape.index} \times \Sexpr{beta3[2]})}
+    \label{eq:ey2}
+\end{align}
+where $\mu$ is the mean heterozygosity of nonzero observations.
+It should be noted that the denominator decreases with shape index, increasing the value of ${\rm E}[Y]$.
+
+The model fitted is in qualitative agreement with mean function fitted to the original dataset by a generalized additive model (GAM) as implemented in ggplot2 by \texttt{geom\_smooth} (Figure \ref{fig:ypred}).
+
+\begin{figure}
+<<>>=
+resids <- data.frame(resids = as.numeric(mZoib$resid[[1]]) , pred = as.numeric(mZoib$ypred[[1]]))
+summ <- summary(mZoib$coeff)
+summRandom <- summary(mZoibRandom$coeff)
+summRandoma1a2 <- summary(mZoibRandoma1a2$coeff)
+stats <- as.data.frame(cbind(summ$statistics[ ,1] , summ$quantiles[ ,c(1 , 5)]))
+stats$model <- as.factor("zoib")
+statsRandom <- as.data.frame(cbind(summRandom$statistics[ ,1] , summRandom$quantiles[ ,c(1 , 5)]))
+statsRandoma1a2 <- as.data.frame(cbind(summRandoma1a2$statistics[ ,1] , summRandoma1a2$quantiles[ ,c(1 , 5)]))
+statsRandom$model <- as.factor("zoib-random")
+rownames(stats) <- c("int" , "SI" , "absDist" , "int Z" , "SI Z" , "absDist Z" , "int v")
+stats$param <- rownames(stats)
+rownames(statsRandom)[1:7] <- rownames(stats)
+rownames(statsRandoma1a2)[1:7] <- rownames(stats)
+rownames(statsRandoma1a2)[8:9] <- c("SI v" , "absDist v")
+statsRandom$param <- rownames(statsRandom)
+statsRandoma1a2$param <- rownames(statsRandoma1a2)
+statsRandom <- statsRandom[statsRandom$param != "sigma", ]
+statsRandoma1a2 <- statsRandoma1a2[statsRandoma1a2$param != "sigma", ]
+statsRandoma1a2$model <- as.factor("a1a2")
+allStats <- rbind(stats , statsRandom , statsRandoma1a2)
+
+ggplot(allStats , aes(y = V1 , col = model)) + 
+    geom_pointrange(aes(x = param , ymin = `2.5%` , ymax = `97.5%`) , position = position_dodge(width = 0.5)) +
+    geom_hline(yintercept = 0 , lty = 2) +
+    ylab("coefficient estimate")
+@
+
+\caption{Mean and $95\%$ posterior probability estimates for each fixed effect specified in the model. 
+    A ``Z'' suffix denotes the effect of the regressor on zero-inflation while a ``v''suffix denotes the effect of the parameter on the precision parameter of the beta distribution. The effects are:
+     \texttt{absDist}, the distance of the focal site from the central transcription start site; \texttt{SI}, the measure of promoter region peakedness employed in the study. 
+     \texttt{int} denotes the intercept value of the parameter.
+All regressors employ a logit link to the focal response, one of $\mu_{i} = \mathrm{E}[y_{i} | \eta]$, $p_{i} = \mathrm{Pr}(y_{i} = 0)$. The zoib-random model allows chromosome to be considered as a random effect, while the $a1a2$ model in addition allows the beta distribution precision parameter to vary with the linear predictors.\label{fig:coeffs}}
+\end{figure}
+
+\begin{figure}
+    
+<<dev='png'>>=
+plotData <- data.frame(ypred = as.numeric(mZoib$ypred[[1]]) , si = rep(dataMelted$shape.index , each = nrow(mZoibRandom$ypred[[1]])))
+si <- seq(-2 , 2 , by = 0.01)
+num <- exp(beta1[1]) / (1 + exp(beta1[1]))
+denom <- (1 + exp(beta3[1] + si * beta3[2]))
+ggplot(plotData , aes(x = si , y = ypred)) +
+    geom_point(alpha = 0.1) +
+    ylab("Predicted Heterozygosity") + xlab("Observed Shape Index") +
+    geom_smooth() + ylim(c(0 , 0.025)) +
+    geom_line(data = data.frame(si , num , denom) , aes(x = si , y = num / denom) , color = "red")
+@
+
+\caption{Predicted heterozygosities for each observed value of \texttt{shape.index}.
+The GAM-fitted conditional mean of these values is shown in blue. ${\rm E}[Y]$ given the parameters inferred to be significant is shown by the red curve. \label{fig:ypred}}
+\end{figure}
+
+\section*{Discussion}
+
+The results are inconsistent with the prediction of higher heterozygosity as promoter region peakedness increases. 
+These results could be interpreted to mean that the exposure to selection is greater on more constitutively expressed genes; though tightly regulated genes may be important at certain times during development or in certain places, constitutively expressed genes are important more of the time.
+The approach presented here potentially better resolves heterozygosities at the lower end of the shape index distribution and addresses the challenge inherent in working with zero-enriched genomic data.
+
+While it is difficult to numerically interpret the results, it is apparent that mean heterozygosity increases only very slightly with shape index, and there is a great deal of unexplained variance in the observed heterozygosities.
+The dataset has a number of variables that were not explored in this analysis. 
+Of particular interest is the variable "cluster", which denotes to which transcription start region each site belongs. It might be informative to reassess the dataset using this variable as a random effect rather than chromosome, as there are a great number of unique clusters per chromosome, and they are unique across chromosomes, however it might be necessary to use a larger subset of the dataset to do this.
+
+There is an increase in the variance of the parameter estimates in the models including random effects.
+Another inspection of the traceplots for the random effects models indicates some posterior estimates may have included results from before sufficient burnin had been completed, which may account for the increased variance observed in the models incorporating random effects.
+
+\printbibliography
+
+\end{document}
