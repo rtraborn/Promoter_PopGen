@@ -4,9 +4,8 @@
 #PBS -k o
 #PBS -q debug
 #PBS -l nodes=1:ppn=16,vmem=72gb
-#PBS -l walltime=1:00:00
+#PBS -l walltime=6:00:00
 #BS -m abe
-#PBS -q debug
 
 module load r
 
