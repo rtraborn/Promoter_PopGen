@@ -38,7 +38,7 @@ The following object is masked from 'package:base':
     xor
 
 Attaching package ff
-- getOption("fftempdir")=="/tmp/RtmpBAOZYr"
+- getOption("fftempdir")=="/tmp/RtmpgMToqK"
 
 - getOption("ffextension")=="ff"
 
@@ -145,10 +145,13 @@ The following object is masked from 'package:ff':
 +     GENOME.class <- readVCF(filename=this.filename, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
 +     GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
 +     split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
++     gc()
 +     split <- diversity.stats(split, pi=FALSE, keep.site.info=TRUE)
++     gc()
 +     nuc.diversity.m <- split@nuc.diversity.within
 +     colnames(nuc.diversity.m) <- names(pop.list)
 +     write.table(nuc.diversity.m, col.names=TRUE, row.names=FALSE, sep="\t", file=diversity_filename) 
++     gc()
 + 
 +     #GENOME.class <- readVCF(filename=thisFileName, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
 +     #GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
@@ -175,26 +178,9 @@ Concatenate regions
 |            :            |            :            | 100 %
 |===================================================| ;-) 
 |            :            |            :            | 100 %
-|=====================[1] 2
-
-GFF information ...
-vcff::open : file opened, contains 2504 samples
-[1] "Available ContigIdentifiers (parameter tid):"
-[1] "7"
-|            :            |            :            | 100 %
-|====================================================
-
-Concatenate regions 
-|            :            |            :            | 100 %
-|====================================================
-|            :            |            :            | 100 %
-|====================================================[1] "Split the data into Features"
-|            :            |            :            | 100 %
-|===================================================| ;-) 
-|            :            |            :            | 100 %
-|============================
+|======
  *** caught segfault ***
-address 0x2b0bc1e62038, cause 'memory not mapped'
+address 0x2ae026f41038, cause 'memory not mapped'
 
 Traceback:
  1: .Call("C_get_sfreqh_C", uniquematrix, matrix_hap[populations[[xx]],     , drop = FALSE])

@@ -45,10 +45,13 @@ for (i in 1:nrow(file.names)) {
     GENOME.class <- readVCF(filename=this.filename, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
     GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
     split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
+    gc()
     split <- diversity.stats(split, pi=FALSE, keep.site.info=TRUE)
+    gc()
     nuc.diversity.m <- split@nuc.diversity.within
     colnames(nuc.diversity.m) <- names(pop.list)
     write.table(nuc.diversity.m, col.names=TRUE, row.names=FALSE, sep="\t", file=diversity_filename) 
+    gc()
 
     #GENOME.class <- readVCF(filename=thisFileName, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
     #GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
