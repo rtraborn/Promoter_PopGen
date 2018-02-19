@@ -17,7 +17,7 @@ Type 'q()' to quit R.
 
 > ## This script in progress for testing on Carbonate
 > # must add routine to do with gff3 files
-> # current script will work, but requires files in the directory 'human-split-data' be tabix-indexed
+> # current script will run, but encounters a 'segmentation fault' error
 > 
 > library(PopGenome)
 Loading required package: ff
@@ -38,7 +38,7 @@ The following object is masked from 'package:base':
     xor
 
 Attaching package ff
-- getOption("fftempdir")=="/tmp/Rtmp3k6m4J"
+- getOption("fftempdir")=="/tmp/RtmpBAOZYr"
 
 - getOption("ffextension")=="ff"
 
@@ -145,7 +145,7 @@ The following object is masked from 'package:ff':
 +     GENOME.class <- readVCF(filename=this.filename, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
 +     GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
 +     split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
-+     split <- diversity.stats(split, pi=TRUE, keep.site.info=TRUE)
++     split <- diversity.stats(split, pi=FALSE, keep.site.info=TRUE)
 +     nuc.diversity.m <- split@nuc.diversity.within
 +     colnames(nuc.diversity.m) <- names(pop.list)
 +     write.table(nuc.diversity.m, col.names=TRUE, row.names=FALSE, sep="\t", file=diversity_filename) 
@@ -153,7 +153,7 @@ The following object is masked from 'package:ff':
 +     #GENOME.class <- readVCF(filename=thisFileName, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
 +     #GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
 +     #split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
-+     #split <- diversity.stats(split, pi=TRUE, keep.site.info=TRUE)
++     #split <- diversity.stats(split, pi=FALSE, keep.site.info=TRUE)
 +     #nuc.diversity.gene.m <- split@nuc.diversity.within
 +     #colnames(nuc.diversity.gene.m) <- names(pop.list)
 +     #write.table(nuc.diversity.gene.m, col.names=TRUE, row.names=FALSE, sep="\t", file="chr22_diversity_genes_test.txt")
@@ -175,13 +175,30 @@ Concatenate regions
 |            :            |            :            | 100 %
 |===================================================| ;-) 
 |            :            |            :            | 100 %
-|==
+|=====================[1] 2
+
+GFF information ...
+vcff::open : file opened, contains 2504 samples
+[1] "Available ContigIdentifiers (parameter tid):"
+[1] "7"
+|            :            |            :            | 100 %
+|====================================================
+
+Concatenate regions 
+|            :            |            :            | 100 %
+|====================================================
+|            :            |            :            | 100 %
+|====================================================[1] "Split the data into Features"
+|            :            |            :            | 100 %
+|===================================================| ;-) 
+|            :            |            :            | 100 %
+|============================
  *** caught segfault ***
-address 0x2b00f44fd038, cause 'memory not mapped'
+address 0x2b0bc1e62038, cause 'memory not mapped'
 
 Traceback:
  1: .Call("C_get_sfreqh_C", uniquematrix, matrix_hap[populations[[xx]],     , drop = FALSE])
  2: calc_diversities(bial, populations, pi, keep.site.info)
- 3: diversity.stats(split, pi = TRUE, keep.site.info = TRUE)
- 4: diversity.stats(split, pi = TRUE, keep.site.info = TRUE)
+ 3: diversity.stats(split, pi = FALSE, keep.site.info = TRUE)
+ 4: diversity.stats(split, pi = FALSE, keep.site.info = TRUE)
 An irrecoverable exception occurred. R is aborting now ...
