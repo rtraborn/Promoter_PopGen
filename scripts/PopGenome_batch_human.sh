@@ -1,12 +1,10 @@
 #!/bin/bash
 
-#PBS -N PopGenome_human_test
+#PBS -N PopGenome_human_test_Chr7
 #PBS -k o
-#PBS -q debug
-#PBS -l nodes=1:ppn=16,vmem=72gb
-#PBS -l walltime=1:00:00
+#PBS -l nodes=1:ppn=16,vmem=96gb
+#PBS -l walltime=14:00:00
 #PBS -m abe
-#PBS -q debug
 
 module load r
 
@@ -17,5 +15,7 @@ cd $WD
 echo "Starting job"
 
 R CMD BATCH PopGenome_batch.R
+
+echo "Job complete"
 
 exit
