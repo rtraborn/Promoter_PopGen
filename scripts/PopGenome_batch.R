@@ -47,18 +47,15 @@ for (i in 1:nrow(file.names)) {
     split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
     gc()
     split <- diversity.stats(split, pi=TRUE, keep.site.info=TRUE)
+    feature.names <- split@region.names
+    n.features <- length(split@region.names)
     nuc.diversity.m <- split@nuc.diversity.within
     colnames(nuc.diversity.m) <- names(pop.list)
     write.table(nuc.diversity.m, col.names=TRUE, row.names=FALSE, sep="\t", file=diversity_filename) 
-    gc()
-    save.session(GENOME.class, vcfDir)
-    gc()
 
-    #GENOME.class <- readVCF(filename=thisFileName, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
-    #GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  
-    #split <- split_data_into_GFF_features(GENOME.class, gff.file=gffFile, chr=this.chr, feature="gene")
-    #split <- diversity.stats(split, pi=FALSE, keep.site.info=TRUE)
-    #nuc.diversity.gene.m <- split@nuc.diversity.within
-    #colnames(nuc.diversity.gene.m) <- names(pop.list)
-    #write.table(nuc.diversity.gene.m, col.names=TRUE, row.names=FALSE, sep="\t", file="chr22_diversity_genes_test.txt")
+        for (i in 1:n.features) {
+	### complete loop for individual features	
+    }
+
+    gc()
 }
