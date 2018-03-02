@@ -52,10 +52,19 @@ for (i in 1:nrow(file.names)) {
     nuc.diversity.m <- split@nuc.diversity.within
     colnames(nuc.diversity.m) <- names(pop.list)
     write.table(nuc.diversity.m, col.names=TRUE, row.names=FALSE, sep="\t", file=diversity_filename) 
-
-        for (i in 1:n.features) {
-	### complete loop for individual features	
+         for (i in 1:n.features) {
+	        print(i)
+	        f.name <- feature.names[i]
+	        root.name <- paste(f.name, "chr", this.chr, sep="_")
+		fileName <- paste(root.name, "txt", sep=".")
+		pi.ma <- split@region.stats@nuc.diversity.within[[i]]
+		if (is.null(pi.ma)==FALSE) {
+				pi.ma.t <- t(pi.ma)
+				colnames(pi.ma.t) <- names(pop.list)
+				write.table(pi.ma.t, col.names=TRUE, row.names=TRUE, sep="\t", quote=FALSE, file=fileName)
+				}
+		else { print("No variation in feature.") 
+			}
     }
-
     gc()
 }
