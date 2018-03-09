@@ -6,7 +6,7 @@ library(tools)
 
 ##########################################################################
 vcfDir <- "/N/dc2/projects/PromoterPopGen/human/human-split-data"	 
-fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/human_file_list.txt"					 
+fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/human_file_list_1.txt"					 
 file.names <- read.csv(file=fileList, header=FALSE)
 colnames(file.names) <- c("chr", "start", "end", "file")		 
 gffFile <- "/N/dc2/projects/PromoterPopGen/genes_gff/Homo_sapiens.GRCh38.90.chromosome.1.gff3"
@@ -33,11 +33,11 @@ for (i in 1:nrow(file.names)) {
     diversity_filename <- paste(diversity_out, "txt", sep=".")    
 
     #for debugging
-    #print(diversity_filename)
-    #print(this.chr)
-    #print(this.start)
-    #print(this.end)
-    #print(this.filename)
+    print(diversity_filename)
+    print(this.chr)
+    print(this.start)
+    print(this.end)
+    print(this.filename)
 
     GENOME.class <- readVCF(filename=this.filename, numcols=100000, frompos=this.start, topos=this.end, tid=this.chr, gffpath=gffFile)
     GENOME.class <- set.populations(GENOME.class, new.populations=pop.list, diploid=TRUE)  

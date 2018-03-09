@@ -6,7 +6,7 @@ library(tools)
 
 ##########################################################################
 vcfDir <- "/N/dc2/projects/PromoterPopGen/human/human-split-data"	 
-fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/human_file_list.txt"					 
+fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/human_file_list_18.txt"					 
 file.names <- read.csv(file=fileList, header=FALSE)
 colnames(file.names) <- c("chr", "start", "end", "file")		 
 gffFile <- "/N/dc2/projects/PromoterPopGen/genes_gff/Homo_sapiens.GRCh38.90.chromosome.18.gff3"
