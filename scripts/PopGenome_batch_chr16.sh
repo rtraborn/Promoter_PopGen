@@ -2,8 +2,8 @@
 
 #PBS -N PopGenome_human_Chr16
 #PBS -k o
-#PBS -l nodes=1:ppn=16,vmem=48gb
-#PBS -l walltime=8:00:00
+#PBS -l nodes=1:ppn=16,vmem=64gb
+#PBS -l walltime=16:00:00
 
 module load r
 
