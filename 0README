@@ -1,0 +1,61 @@
+#### Sources of 1kGP gene annotation files ####
+# To download these files, please type 'source 0README' from this directory
+
+  if [ ! -d "genes_gff" ] ; then
+    mkdir genes_gff
+  fi
+
+cd genes_gff
+
+echo "Downloading the gff3 annotation files"
+
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.1.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.1.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.2.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.2.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.3.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.3.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.4.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.4.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.5.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.5.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.6.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.6.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.7.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.7.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.8.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.8.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.9.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.9.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.10.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.10.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.11.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.11.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.12.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.12.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.13.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.13.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.14.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.14.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.15.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.15.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.16.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.16.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.17.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.17.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.18.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.18.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.19.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.19.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.20.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.20.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.21.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.21.gff3.gz
+wget ftp://ftp.ensembl.org/pub/release-90/gff3/homo_sapiens/Homo_sapiens.GRCh38.90.chromosome.22.gff3.gz
+gzip -d Homo_sapiens.GRCh38.90.chromosome.22.gff3.gz
+
+## continue for all chromosomes
+
+cd ..
+
+echo "Download complete."
