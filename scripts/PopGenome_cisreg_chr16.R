@@ -5,11 +5,11 @@ library(bigmemory)
 library(tools)
 
 ##########################################################################
-vcfDir <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/cisreg_chr22"	 
-fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/cisreg_chr22/human_file_list_22.txt"					 
+vcfDir <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/cisreg_chr16"	 
+fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/cisreg_chr16/human_file_list_16.txt"					 
 file.names <- read.csv(file=fileList, header=FALSE)
 colnames(file.names) <- c("chr", "start", "end", "file")		 
-gffFile <- "/N/dc2/projects/PromoterPopGen/TSSs_gff/TSSset_human_chr_22_updated.gff3"
+gffFile <- "/N/dc2/projects/PromoterPopGen/TSSs_gff/TSSset_human_chr_16_updated.gff3"
 popListFile <- "/N/dc2/projects/PromoterPopGen/DmPromoterPopGen/data/human/pop_list_1kGP.csv"					 
 ##########################################################################
 
