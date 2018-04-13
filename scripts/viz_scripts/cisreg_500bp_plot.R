@@ -31,9 +31,10 @@ colnames(h.out) <- -250:250
 
 write.table(h.out, file="/N/u/rtraborn/Carbonate/PromoterPopGen/DmPromoterPopGen/scripts/viz_scripts/pi_values_chr22.txt", quote=F, row.names=TRUE, col.names=TRUE, sep="\t")
 
-h.melt <- melt(h.out)
-colnames(h.melt) <- c("position","pi")
-p <- ggplot(h.melt, aes(x=position, y=pi))
+h.mean.all <- apply(h.out, 2, mean)
+h.combined <- as.data.frame(cbind(-250:250, h.mean.all))
+colnames(h.combined) <- c("position","pi")
+p <- ggplot(h.combined, aes(x=position, y=pi))
 p + geom_point()
 
 ggsave(file="/N/u/rtraborn/Carbonate/PromoterPopGen/DmPromoterPopGen/Plots/pi_chr22_500bp.png")
