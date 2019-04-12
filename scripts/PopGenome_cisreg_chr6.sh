@@ -7,7 +7,7 @@
 
 module load r
 
-WD=/N/u/rtraborn/Carbonate/PromoterPopGen/DmPromoterPopGen/scripts
+WD=/N/u/rtraborn/Carbonate/PromoterPopGen/Promoter_PopGen/scripts
 
 cd $WD
 

@@ -3,11 +3,11 @@
 #PBS -N PopGenome_human_Chr2
 #PBS -k o
 #PBS -l nodes=1:ppn=16,vmem=48gb
-#PBS -l walltime=8:00:00
+#PBS -l walltime=4:00:00
 
 module load r
 
-WD=/N/u/rtraborn/Carbonate/PromoterPopGen/DmPromoterPopGen/scripts
+WD=/N/u/rtraborn/Carbonate/PromoterPopGen/Promoter_PopGen/scripts
 
 cd $WD
 

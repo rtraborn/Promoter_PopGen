@@ -10,12 +10,12 @@ fileList <- "/N/dc2/projects/PromoterPopGen/human/human-split-data/gene_chr5/hum
 file.names <- read.csv(file=fileList, header=FALSE)
 colnames(file.names) <- c("chr", "start", "end", "file")		 
 gffFile <- "/N/dc2/projects/PromoterPopGen/genes_gff/Homo_sapiens.GRCh38.90.chromosome.5.gff3"
-popListFile <- "/N/dc2/projects/PromoterPopGen/DmPromoterPopGen/data/human/pop_list_1kGP.csv"					 
+popListFile <- "/N/dc2/projects/PromoterPopGen/Promoter_PopGen/data/human/pop_list_1kGP.csv"					 
 ##########################################################################
 
 setwd(vcfDir)
 
-source("/N/dc2/projects/PromoterPopGen/DmPromoterPopGen/scripts/identifiers_to_list.R")
+source("/N/dc2/projects/PromoterPopGen/Promoter_PopGen/scripts/identifiers_to_list.R")
 pop.list <- identifiers_to_list(csv.file=popListFile)
 
 for (i in 1:nrow(file.names)) {
