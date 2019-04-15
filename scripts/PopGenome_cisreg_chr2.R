@@ -1,7 +1,7 @@
 ## This script tested and ready for production mode on Carbonate
 
 library(PopGenome)
-library(bigmemory)
+library(bigmemory)o
 library(tools)
 
 ##########################################################################
