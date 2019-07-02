@@ -9,7 +9,7 @@ vcfDir <- "/N/dc2/projects/PromoterPopGen/human_complete_data/human-split-data/g
 fileList <- "/N/dc2/projects/PromoterPopGen/human_complete_data/human-split-data/gene_chr9/human_file_list_9.txt"					 
 file.names <- read.csv(file=fileList, header=FALSE)
 colnames(file.names) <- c("chr", "start", "end", "file")		 
-gffFile <- "/N/dc2/projects/PromoterPopGen/genes_gff/Homo_sapiens.GRCh38.90.chromosome.9.gff3"
+gffFile <- "/N/dc2/projects/PromoterPopGen/gene_gff/Homo_sapiens.GRCh38.90.chromosome.9.gff3"
 popListFile <- "/N/dc2/projects/PromoterPopGen/Promoter_PopGen/data/human/pop_list_1kGP.csv"					 
 ##########################################################################
 
