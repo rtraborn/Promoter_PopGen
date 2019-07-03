@@ -1,0 +1,72 @@
+
+R version 3.3.1 (2016-06-21) -- "Bug in Your Hair"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## This script tested and ready for production mode on Carbonate
+> 
+> library(PopGenome)
+Loading required package: ff
+Loading required package: bit
+Attaching package bit
+package:bit (c) 2008-2012 Jens Oehlschlaegel (GPL-2)
+creators: bit bitwhich
+coercion: as.logical as.integer as.bit as.bitwhich which
+operator: ! & | xor != ==
+querying: print length any all min max range sum summary
+bit access: length<- [ [<- [[ [[<-
+for more help type ?bit
+
+Attaching package: 'bit'
+
+The following object is masked from 'package:base':
+
+    xor
+
+Attaching package ff
+- getOption("fftempdir")=="/tmp/1058525.s1/RtmpctuP5o"
+
+- getOption("ffextension")=="ff"
+
+- getOption("ffdrop")==TRUE
+
+- getOption("fffinonexit")==TRUE
+
+- getOption("ffpagesize")==65536
+
+- getOption("ffcaching")=="mmnoflush"  -- consider "ffeachflush" if your system stalls on large writes
+
+- getOption("ffbatchbytes")==16777216 -- consider a different value for tuning your system
+
+- getOption("ffmaxbytes")==536870912 -- consider a different value for tuning your system
+
+
+Attaching package: 'ff'
+
+The following objects are masked from 'package:bit':
+
+    clone, clone.default, clone.list
+
+The following objects are masked from 'package:utils':
+
+    write.csv, write.csv2
+
+The following objects are masked from 'package:base':
+
+    is.factor, is.ordered
+
+> library(bigmemory)o
+Error: unexpected symbol in "library(bigmemory)o"
+Execution halted
