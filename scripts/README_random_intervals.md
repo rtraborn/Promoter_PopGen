@@ -1,0 +1,1 @@
+### In order to perform a PopGenome calculation on a random genome, we first need to generate the split files and file names according to the method that Krishna developed. To discuss during our meeting on 11/21/19
