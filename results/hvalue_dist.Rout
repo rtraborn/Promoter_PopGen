@@ -1,0 +1,147 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> library(ggplot2)
+> 
+> setwd("/N/dc2/projects/PromoterPopGen/PromoterPopGen/results")
+> 
+> ma_file <- read.table(file="cis1/GBR.txt", header=FALSE)
+> 
+> ma_data <- ma_file[,-1:-2]
+> rownames(ma_data) <- ma_file[,2]
+> my.vec <- 0:40000
+> my.colnames <- paste("site",my.vec, sep="_")
+> colnames(ma_data) <- my.colnames
+> 
+> ma_data[1:10, 1:10]
+                  site_0 site_1 site_2 site_3 site_4 site_5 site_6 site_7
+ID=replicates_4        0      0      0      0      0      0      0      0
+ID=replicates_5        0      0      0      0      0      0      0      0
+ID=replicates_6        0      0      0      0      0      0      0      0
+ID=replicates_7        0      0      0      0      0      0      0      0
+ID=replicates_11       0      0      0      0      0      0      0      0
+ID=replicates_295      0      0      0      0      0      0      0      0
+ID=replicates_296      0      0      0      0      0      0      0      0
+ID=replicates_308      0      0      0      0      0      0      0      0
+ID=replicates_312      0      0      0      0      0      0      0      0
+ID=replicates_314      0      0      0      0      0      0      0      0
+                  site_8 site_9
+ID=replicates_4        0      0
+ID=replicates_5        0      0
+ID=replicates_6        0      0
+ID=replicates_7        0      0
+ID=replicates_11       0      0
+ID=replicates_295      0      0
+ID=replicates_296      0      0
+ID=replicates_308      0      0
+ID=replicates_312      0      0
+ID=replicates_314      0      0
+> 
+> all_data <- unlist(unclass(ma_data))
+> 
+> my.ind <- which(all_data>0)
+> 
+> all_data_plus <- all_data[my.ind]
+> 
+> save(all_data, file="all_hval_data.RData")
+> save(all_data_plus, file="all_hval_data_plus.RData")
+> 
+> hval.plus <- as.data.frame(cbind(all_data_plus))
+> n.row.vec <- 1:nrow(hval.plus)
+> 
+> hval.plus.df <-  cbind(hval.plus, n.row.vec)
+> head(hval.plus.df)
+           all_data_plus n.row.vec
+site_0518     0.01098901         1
+site_0559     0.01098901         2
+site_0964     0.12385405         3
+site_01013    0.02185660         4
+site_01054    0.05373080         5
+site_01343    0.02185660         6
+> 
+> a <- ggplot(hval.plus.df, aes(all_data_plus))
+> a + geom_histogram(binwidth = 0.01, col="white", fill="royalblue") 
+> 
+> ggsave(file="h_val_dist_GBR.png")
+Saving 7 x 7 in image
+> 
+> ma_file <- read.table(file="cis1/FIN.txt", header=FALSE)
+> 
+> ma_data <- ma_file[,-1:-2]
+> rownames(ma_data) <- ma_file[,2]
+> my.vec <- 0:40000
+> my.colnames <- paste("site",my.vec, sep="_")
+> colnames(ma_data) <- my.colnames
+> 
+> ma_data[1:10, 1:10]
+                  site_0 site_1 site_2 site_3 site_4 site_5 site_6 site_7
+ID=replicates_4        0      0      0      0      0      0      0      0
+ID=replicates_5        0      0      0      0      0      0      0      0
+ID=replicates_6        0      0      0      0      0      0      0      0
+ID=replicates_7        0      0      0      0      0      0      0      0
+ID=replicates_11       0      0      0      0      0      0      0      0
+ID=replicates_295      0      0      0      0      0      0      0      0
+ID=replicates_296      0      0      0      0      0      0      0      0
+ID=replicates_308      0      0      0      0      0      0      0      0
+ID=replicates_312      0      0      0      0      0      0      0      0
+ID=replicates_314      0      0      0      0      0      0      0      0
+                  site_8 site_9
+ID=replicates_4        0      0
+ID=replicates_5        0      0
+ID=replicates_6        0      0
+ID=replicates_7        0      0
+ID=replicates_11       0      0
+ID=replicates_295      0      0
+ID=replicates_296      0      0
+ID=replicates_308      0      0
+ID=replicates_312      0      0
+ID=replicates_314      0      0
+> 
+> all_data <- unlist(unclass(ma_data))
+> 
+> my.ind <- which(all_data>0)
+> 
+> all_data_plus <- all_data[my.ind]
+> 
+> save(all_data, file="all_hval_data_FIN.RData")
+> save(all_data_plus, file="all_hval_data_plus_FIN.RData")
+> 
+> hval.plus <- as.data.frame(cbind(all_data_plus))
+> n.row.vec <- 1:nrow(hval.plus)
+> 
+> hval.plus.df <-  cbind(hval.plus, n.row.vec)
+> head(hval.plus.df)
+           all_data_plus n.row.vec
+site_0964     0.14931036         1
+site_01054    0.03978875         2
+site_01343    0.01010101         3
+site_01890    0.19058606         4
+site_11549    0.08721735         5
+site_12039    0.02999539         6
+> 
+> a <- ggplot(hval.plus.df, aes(all_data_plus))
+> a + geom_histogram(binwidth = 0.01, col="white", fill="darkgreen") 
+> 
+> ggsave(file="h_val_dist_FIN.png")
+Saving 7 x 7 in image
+> 
+> 
+> proc.time()
+   user  system elapsed 
+357.591  11.442 369.128 

@@ -27,6 +27,8 @@ n.row.vec <- 1:nrow(hval.plus)
 hval.plus.df <-  cbind(hval.plus, n.row.vec)
 head(hval.plus.df)
 
+quantile(hval.plus.df$all_data_plus, probs= seq(0, 1, 0.1), na.rm=FALSE)
+
 a <- ggplot(hval.plus.df, aes(all_data_plus))
 a + geom_histogram(binwidth = 0.01, col="white", fill="royalblue") 
 
@@ -56,6 +58,8 @@ n.row.vec <- 1:nrow(hval.plus)
 
 hval.plus.df <-  cbind(hval.plus, n.row.vec)
 head(hval.plus.df)
+
+quantile(hval.plus.df$all_data_plus, probs= seq(0, 1, 0.1), na.rm=FALSE)
 
 a <- ggplot(hval.plus.df, aes(all_data_plus))
 a + geom_histogram(binwidth = 0.01, col="white", fill="darkgreen") 
