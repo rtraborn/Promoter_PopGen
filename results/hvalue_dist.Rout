@@ -75,6 +75,12 @@ site_01013    0.02185660         4
 site_01054    0.05373080         5
 site_01343    0.02185660         6
 > 
+> quantile(hval.plus.df$all_data_plus, probs = seq(0, 1, 0.1), na.rm=FALSE)
+        0%        10%        20%        30%        40%        50%        60% 
+0.01098901 0.01098901 0.01098901 0.02185660 0.03260276 0.06411268 0.11420072 
+       70%        80%        90%       100% 
+0.22202659 0.35098051 0.45516362 0.50276243 
+> 
 > a <- ggplot(hval.plus.df, aes(all_data_plus))
 > a + geom_histogram(binwidth = 0.01, col="white", fill="royalblue") 
 > 
@@ -135,6 +141,12 @@ site_01890    0.19058606         4
 site_11549    0.08721735         5
 site_12039    0.02999539         6
 > 
+> quantile(hval.plus.df$all_data_plus, probs = seq(0, 1, 0.1), na.rm=FALSE)
+        0%        10%        20%        30%        40%        50%        60% 
+0.01010101 0.01010101 0.01010101 0.02999539 0.03978875 0.08721735 0.15777060 
+       70%        80%        90%       100% 
+0.25129467 0.36389273 0.45941650 0.50253807 
+> 
 > a <- ggplot(hval.plus.df, aes(all_data_plus))
 > a + geom_histogram(binwidth = 0.01, col="white", fill="darkgreen") 
 > 
@@ -144,4 +156,4 @@ Saving 7 x 7 in image
 > 
 > proc.time()
    user  system elapsed 
-357.591  11.442 369.128 
+355.564  12.213 368.747 
